@@ -44,5 +44,8 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.7.1"
         runtime ":resources:1.1.5"
         build ":tomcat:$grailsVersion"
+	build ':release:2.2.1', ':rest-client-builder:1.0.3', {
+	  export = false
+	}
     }
 }
