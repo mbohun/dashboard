@@ -1,0 +1,29 @@
+language: groovy
+
+jdk:
+- oraclejdk7
+
+branches:
+  only:
+  - master
+
+before_install:
+- rm -rf ~/.gvm
+- curl -s get.gvmtool.net > ~/install_gvm.sh
+- chmod 775 ~/install_gvm.sh
+- ~/install_gvm.sh
+- echo "gvm_auto_answer=true" > ~/.gvm/etc/config
+- source ~/.gvm/bin/gvm-init.sh
+- gvm install grails $GRAILS_VERSION || true
+
+before_script:
+- mkdir -p ~/.grails; cp travis_grails_settings_old.groovy ~/.grails/settings.groovy
+- maven_repo="nectar-nexus-repo-snapshot"; grep 'app\.version' application.properties | grep -q "\-SNAPSHOT"; if [ "$?" = "1" ]; then maven_repo="nectar-nexus-repo-release"; fi;
+
+script: grails clean && grails upgrade --non-interactive && grails refresh-dependencies --non-interactive && grails prod war && grails prod maven-deploy --repository=$maven_repo
+
+env:
+  global:
+  - GRAILS_VERSION=2.2.4
+  - secure: "Nrq5xWeFGVbWwiWmz7DfJEtmm0gNCHF124ufwie/PYCRLbN1+DfniSCjsyt+UUvXvRP4eJ1WDeid3t8qJGDULeu3dqmoYNaso480TADzy0fwZjS4SpSyJZjbtysuoX1yv/B5+/5Nef8Qy0vZtZzrFegUWlUv55zzL6bSa0e5xTY="
+  - secure: "Y9+hMsjSm5zrVSHR3SRTLaS0W9pmZPxG0Txm2A3qJ4M+TTIgvRlvHq9A032U+U1H1GK7e+Ygakw8KHCKp6sE2CJ3yZAWWUJIXiVDqQ+C0rCNGONNgmzqGMOEhaO9YstI8vmh9vFUOzov5kRM4lsGshqMJsKVCrG1xB5D0QgV2gc="
