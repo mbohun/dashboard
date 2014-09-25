@@ -24,6 +24,6 @@ script: grails clean && grails upgrade --non-interactive && grails refresh-depen
 
 env:
   global:
-  - GRAILS_VERSION=2.2.4
+  - GRAILS_VERSION=`grep '^app\.grails\.version=' application.properties | sed -e 's/^app\.grails\.version=//g'`
   - secure: "Nrq5xWeFGVbWwiWmz7DfJEtmm0gNCHF124ufwie/PYCRLbN1+DfniSCjsyt+UUvXvRP4eJ1WDeid3t8qJGDULeu3dqmoYNaso480TADzy0fwZjS4SpSyJZjbtysuoX1yv/B5+/5Nef8Qy0vZtZzrFegUWlUv55zzL6bSa0e5xTY="
   - secure: "Y9+hMsjSm5zrVSHR3SRTLaS0W9pmZPxG0Txm2A3qJ4M+TTIgvRlvHq9A032U+U1H1GK7e+Ygakw8KHCKp6sE2CJ3yZAWWUJIXiVDqQ+C0rCNGONNgmzqGMOEhaO9YstI8vmh9vFUOzov5kRM4lsGshqMJsKVCrG1xB5D0QgV2gc="
